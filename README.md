@@ -1,36 +1,88 @@
-# crewai-blood-report-analyser-bot
+# Blood Report Analyser v2
 
-# Blood Test Analysis Workflow
+A RAG-powered blood report analysis app. Upload a PDF blood report, and chat with it — ask about your abnormal markers, compare values across reports, or look up what a marker means in medical literature.
 
-This Jupyter Notebook automates the process of analyzing blood test reports and providing health recommendations based on the findings. It utilizes CrewAI, a library for task automation and delegation, along with PyPDF2 for reading PDF files and some additional tools for searching the web.
-
-## Approach:
-
-1. **Reading Blood Test Reports**: The notebook extracts text from specific pages of a PDF blood test report using PyPDF2.
-
-2. **Agent and Task Definition**: We define three types of agents - Blood Test Analyst, Article Researcher, and Health Advisor. Each agent has a specific role in the workflow. Tasks are also defined, each assigned to a specific agent.
-
-3. **Executing Tasks**: The Crew is formed with agents and tasks. Each task is executed sequentially, passing context from one task to another.
-
-## Steps to Run the Code:
-
-1. **Install Required Packages**: Make sure you have Python installed on your system. Install the required packages using pip:
-    ```
-    pip install crewai PyPDF2
-    ```
-
-2. **Set Up API Keys**: Before running the notebook, replace the empty strings with your API keys. Update the following lines with your Serper API key and OpenAI API key:
-    ```python
-    os.environ["SERPER_API_KEY"] = "<your_serper_api_key>"
-    os.environ["OPENAI_API_KEY"] = "<your_openai_api_key>"
-    ```
-
-3. **Download PDF Blood Test Report**: Download the PDF blood test report that you want to analyze and update the `pdf` variable in the notebook with the correct file path.
-
-4. **Run the Notebook**: Execute the Jupyter Notebook. You can run each cell one by one or all at once, depending on your preference.
-
-5. **Review Output**: Once the notebook completes execution, review the output. You should see the summary of blood test results and health recommendations based on the articles found.
+**Live app:** [Streamlit Community Cloud](https://crewai-blood-report-analyser-bot.streamlit.app)
 
 ---
 
-PS: Due to limited token size I have chosen page number 1 and 3 as they contained the majority of the test results for the analysis.
+## What it does
+
+- **Ingests** blood report PDFs using `pdfplumber` + deterministic regex extraction — no LLM in the pipeline, so extraction is fast, cheap, and reliable
+- **Stores** structured marker data (name, value, unit, reference range, flag) in Supabase and embeds panel summaries into Qdrant
+- **Chats** via a LangGraph ReAct agent backed by Groq (`llama-3.3-70b-versatile`) with three tools:
+  - `query_my_reports` — semantic search over your report panels
+  - `compare_reports` — chronological marker comparison across reports
+  - `search_medical_kb` — citations from a curated MedlinePlus knowledge base
+- **Remembers** conversation history within a session via LangGraph `MemorySaver`
+
+---
+
+## Stack
+
+| Layer | Tech |
+|---|---|
+| PDF extraction | pdfplumber + regex |
+| Structured storage | Supabase (PostgreSQL) |
+| Vector storage | Qdrant Cloud |
+| Embeddings | `all-MiniLM-L6-v2` (sentence-transformers) |
+| LLM | Groq — llama-3.3-70b-versatile |
+| Agent orchestration | LangGraph ReAct |
+| Observability | LangSmith |
+| UI | Streamlit |
+
+---
+
+## Local setup
+
+```bash
+git clone https://github.com/shreyanshverma7/crewai-blood-report-analyser-bot.git
+cd crewai-blood-report-analyser-bot
+
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+
+cp .env.example .env
+# Fill in your keys in .env
+```
+
+**Required credentials** (all free tiers available):
+- [Groq](https://console.groq.com) — `GROQ_API_KEY`
+- [Supabase](https://supabase.com) — `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`
+- [Qdrant Cloud](https://cloud.qdrant.io) — `QDRANT_URL`, `QDRANT_API_KEY`
+- [LangSmith](https://smith.langchain.com) — `LANGCHAIN_API_KEY`
+
+**One-time setup:**
+
+```bash
+# Verify all services are reachable
+python scripts/smoke_test.py
+
+# Create Supabase tables (paste scripts/create_tables.sql into Supabase SQL Editor)
+
+# Create Qdrant collections
+python scripts/setup_qdrant.py
+
+# Embed the medical knowledge base
+python -c "from src.kb.loader import load_kb; load_kb()"
+```
+
+**Run the app:**
+
+```bash
+streamlit run src/ui/app.py
+```
+
+---
+
+## Project structure
+
+```
+src/
+  ingestion/    # PDF parsing, marker extraction, metadata, embedding, pipeline
+  agent/        # LangGraph graph, tools, LLM config
+  kb/           # Medical KB loader + MedlinePlus source documents
+  db/           # Supabase client
+  ui/           # Streamlit app
+scripts/        # Setup and smoke test scripts
+```
