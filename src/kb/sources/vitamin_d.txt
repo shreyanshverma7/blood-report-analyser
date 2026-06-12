@@ -1,0 +1,164 @@
+You Are Here:
+Home
+→
+Medical Tests
+→
+Vitamin D Test
+URL of this page: https://medlineplus.gov/lab-tests/vitamin-d-test/
+Vitamin D Test
+To use the sharing features on this page, please enable JavaScript.
+What is a vitamin D test?
+A vitamin D test measures the levels of vitamin D in your blood.
+Vitamin D
+helps your body absorb
+calcium
+to build healthy bones and teeth. It also helps keep your muscles, nerves, and immune system working normally. Having
+vitamin D deficiency
+(very low levels of vitamin D) can lead to
+bone disorders
+Â and other medical conditions.
+You can get vitamin D from three sources:
+Sunlight.
+Your body makes vitamin D when your bare skin, without sunscreen, is exposed to sunlight when you are outdoors.
+Certain foods.
+Only a few foods, such as egg yolks, liver, and fatty fish, naturally contain vitamin D. That's why vitamin D is added to many foods, including breakfast cereals, milk, and other dairy items.
+Supplements.
+You can take vitamin D supplements in pill form or liquid drops.
+Before your body can use vitamin D, your liver must change it into another form called 25 hydroxyvitamin D, or 25(OH)D. Most vitamin D blood tests measure the level of 25(OH)D in your blood because that's the most accurate way to see if you have enough vitamin D.
+Another type of vitamin D test measures a different form of vitamin D in your blood. It's called "active vitamin D." (It may also be called calcitriol or 1,25-dihydroxyvitamin D.) This test isn't usually used to check if you have enough vitamin D. But it may be used to monitor
+kidney problems
+or to help find the cause of abnormal
+calcium levels in your blood
+.
+Other names: 25-hydroxyvitamin D, 25(OH)D, cholecalciferol test, ergocalciferol test, calcidiol test, vitamin D2 test, vitamin D3 test
+What is it used for?
+A vitamin D test is used to check the levels of vitamin D in your blood. The test is usually done if your health care provider thinks that a bone or other health condition you have could be caused by very low vitamin D levels.
+Routine vitamin D testing is not recommended for everyone. Your provider can let you know whether a vitamin D test is right for you.
+Why do I need a vitamin D test?
+Your provider may order a vitamin D test if you:
+Have been diagnosed with a medical condition that may be related to vitamin D deficiency, such as:
+Osteomalacia, soft bones, often with muscle weakness
+Low
+bone density
+, osteopenia, or
+osteoporosis
+Rickets
+, a problem with bone growth in children
+Have signs or symptoms of a condition that may be related to vitamin D deficiency such as:
+Bone pain
+Muscle weakness
+or aches
+Soft or deformed bones
+Weak bones and
+fractures
+Â (broken bones)
+Have a high risk for developing vitamin D deficiency. Your risk may be high if you:
+Rarely
+expose your skin to sunlight
+Â because you stay indoors, cover up outside, use sunscreen, or live where there is little sunlight
+Don't eat enough food or have
+malnutrition
+Have had
+weight loss surgery
+Have a condition that makes it difficult to absorb nutrients in food, such as
+Crohn's disease
+,
+ulcerative colitis
+, or
+celiac disease
+Have kidney or
+liver disease
+Â that affects your ability to change vitamin D into a form your body can use
+Take medicines that affect vitamin D levels, including certain
+statins
+to lower
+cholesterol
+,
+steroids
+, and weight-loss medicines
+Babies and children can develop serious health problems from a lack of vitamin D. A provider may order a vitamin D test for:
+Babies that are mainly
+fed breastmilk
+. Breastmilk is low in vitamin D. All babies need vitamin D supplements shortly after birth, unless they are fed only formula, which contains vitamin D.
+Children with diets low in vitamin D.
+If you are taking vitamin D supplements for vitamin D deficiency, your provider may order a test to see if your vitamin D levels are improving.
+Getting too much vitamin D from supplements can harm your health. This rarely happens, but if you take supplements and have symptoms of high levels of vitamin D, your provider may order a test. The symptoms of too much vitamin D include:
+Nausea and vomiting
+Poor appetite
+Constipation
+Muscle weakness
+Weight loss
+What happens during a vitamin D test?
+A vitamin D test is a blood test. During a blood test, a health care professional will take a blood sample from a vein in your arm, using a small needle. After the needle is inserted, a small amount of blood will be collected into a test tube or vial. You may feel a little sting when the needle goes in or out. This usually takes less than five minutes.
+Will I need to do anything to prepare for the test?
+You don't need any special preparations for a vitamin D test. But be sure to tell your provider about all the medicines, vitamins, and supplements you take, because they may affect your test results. But don't stop taking any medicines unless your provider tells you to.
+Are there any risks to the test?
+There is very little risk to having a blood test. You may have slight pain or bruising at the spot where the needle was put in, but most symptoms go away quickly.
+What do the results mean?
+Your test results may be reported as "total vitamin D," or as the amounts of vitamin D2 and vitamin D3. Vitamin D2 and D3 work about the same in your body. If you add vitamin D2 and D3 together, you get your total vitamin D. Total vitamin D is the important number to check.
+Your test results will usually describe total vitamin D levels as:
+Deficient
+, which means very low vitamin D levels that are likely to affect your bones and general health
+Insufficient
+, which means low vitamin D levels that may weaken your bones and affect your health, even if you don't have symptoms
+Sufficient or optimal
+, which means vitamin D levels that are enough for good bone and general health for most people
+Toxic or possible toxicity
+, which means very high vitamin D levels that might cause health problems
+If your total vitamin D levels are deficient or insufficient
+, it may mean you:
+Don't get enough vitamin D from your diet and/or exposure to sunlight
+Have trouble absorbing vitamin D from your food, which may be a sign of a
+malabsorption disorder
+Have trouble changing vitamin D into a form your body can use, which may be a sign of kidney or liver disease
+Take a medicine that affects vitamin D levels
+To increase your vitamin D levels, your provider may recommend taking vitamin D supplements and/or eating more foods rich in vitamin D. This is usually safer than getting more sun, which may cause
+skin cancer
+.
+If your total vitamin D levels are high or toxic
+, it usually means you're getting too much from supplements. You'll need to stop taking the supplements to reduce your vitamin D levels. That's because too much vitamin D can cause serious damage to your organs and blood vessels.
+To learn what your vitamin D test results mean, talk with your provider.
+Learn more about
+laboratory tests, reference ranges, and understanding results
+.
+References
+Cleveland Clinic: Health Library: Diagnostics & Testing [Internet]. Cleveland (OH): Cleveland Clinic; c2024. Blood Tests; [reviewed 2022 Dec 06; cited 2024 Nov 11]; [about 16 screens]. Available from:
+https://my.clevelandclinic.org/health/diagnostics/24508-blood-tests
+Cleveland Clinic: Health Library: Diagnostics & Testing [Internet]. Cleveland (OH): Cleveland Clinic; c2024. Vitamin D Deficiency; [reviewed 2022 Aug 2; cited 2024 Nov 11]; [about 15 screens]. Available from:
+https://my.clevelandclinic.org/health/articles/15050-vitamin-d--vitamin-d-deficiency
+Demay MB, Pittas AG, Bikle DD, Diab DL, Kiely ME, Lazaretti-Castro M, Lips P, Mitchell DM, Murad MH, Powers S, Rao SD, Scragg R, Tayek JA, Valent AM, Walsh JME, McCartney CR. Vitamin D for the Prevention of Disease: An Endocrine Society Clinical Practice Guideline. J Clin Endocrinol Metab.[Internet]. 2024 Jul 12; [cited 2024 Nov 11]; 109(8):1907-1947. doi: 10.1210/clinem/dgae290. PMID: 38828931. Available from:
+https://academic.oup.com/jcem/article/109/8/1907/7685305#474301909
+Johns Hopkins Medicine [Internet]. Johns Hopkins Medicine; c2024. Health Library: Vitamin D and Calcium [cited 2024 Nov 11]; [about 8 screens]. Available from:
+https://www.hopkinsmedicine.org/health/wellness-and-prevention/vitamin-d-and-calcium
+Kennel KA, Drake MT, Hurley DL. Vitamin D deficiency in adults: when to test and how to treat. Mayo Clin Proc.[Internet]. 2010 Aug;[cited 2024 Nov 11]; 85(8):752-7; quiz 757-8. doi: 10.4065/mcp.2010.0138. PMID: 20675513; PMCID: PMC2912737. Available from:
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2912737/
+Mayo Clinic Medical Laboratories [Internet]. Mayo Foundation for Medical Education and Research; 1995-2024. Vitamin D; 2023 Aug 10 [cited 2024 Nov 11]; [about 5 screens]. Available from:
+https://www.mayoclinic.org/drugs-supplements-vitamin-d/art-20363792
+Merck Manual Consumer Version [Internet]. Kenilworth (NJ): Merck & Co. Inc.; c2024. Vitamin D Deficiency [reviewed 2024 Aug; cited 2024  Nov 11]; [about 7 screens]. Available from:
+https://www.merckmanuals.com/home/disorders-of-nutrition/vitamins/vitamin-d-deficiency
+National Cancer Institute [Internet]. Bethesda (MD): U.S. Department of Health and Human Services; NCI Dictionary of Cancer Terms: vitamin D [cited 2024 Nov 11]; [about 1 screens]. Available from:
+https://www.cancer.gov/publications/dictionaries/cancer-terms/def/vitamin-d
+National Institutes of Health: Office of Dietary Supplements [Internet]. Bethesda (MD): U.S. Department of Health and Human Services; Vitamin D: Fact Sheet for Consumers [updated 2022 Nov 8; cited 2024 Nov 11]; [about 11 screens]. Available from:
+https://ods.od.nih.gov/factsheets/VitaminD-Consumer/
+National Institutes of Health: Office of Dietary Supplements [Internet]. Bethesda (MD): U.S. Department of Health and Human Services; Vitamin D: Fact Sheet for Health Professionals [updated 2024 Jul 26; cited 2024 Nov 11]; [about 64 screens]. Available from:
+https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/
+Nemours KidsHealth [Internet]. Jacksonville (FL): The Nemours Foundation; c1995-2024. Getting a Blood Test; [reviewed 2021 Sep; cited 2024 Nov 11]; [about 4 screens]. Available from:
+https://kidshealth.org/en/parents/blood-tests.html
+Testing.com [Internet]. Seattle (WA): OneCare Media; c2022. Vitamin D Tests; [modified 2023 Dec 14; cited 2024 Nov 11]; [about 13 screens]. Available from:
+https://www.testing.com/tests/vitamin-d-tests/
+Related Health Topics
+Bone Diseases
+Vitamin D
+Vitamin D Deficiency
+Related Medical Tests
+Bone Density Scan
+Calcium Blood Test
+How to Cope with Medical Test Anxiety
+How to Understand Your Lab Results
+Parathyroid Hormone (PTH) Test
+Phosphate in Blood
+Vitamin B Test
+Vitamin E (Tocopherol) Test
+What You Need to Know About Blood Testing
+The information on this site should not be used as a substitute for professional medical care or advice. Contact a health care provider if you have questions about your health.
+Learn how to cite this page

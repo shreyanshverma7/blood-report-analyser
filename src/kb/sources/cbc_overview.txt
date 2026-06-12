@@ -1,0 +1,122 @@
+You Are Here:
+Home
+→
+Medical Tests
+→
+Complete Blood Count (CBC)
+URL of this page: https://medlineplus.gov/lab-tests/complete-blood-count-cbc/
+Complete Blood Count (CBC)
+To use the sharing features on this page, please enable JavaScript.
+What is a Complete Blood Count?
+A complete blood count, or CBC, is a group of blood tests that measure the number and size of the different cells in your blood. A CBC measures:
+Red blood cells
+, which carry oxygen from your lungs to the rest of your body.
+White blood cells
+, which fight infections and other diseases. There are five major types of white blood cells. A CBC test measures the total number of white cells in your blood. A different test called a
+CBC with differential
+measures the number of each type of these white blood cells.
+Platelets
+, which stop bleeding by helping your blood to clot.
+Hemoglobin
+, an iron-rich protein in red blood cells that carries oxygen from your lungs to the rest of your body.
+Hematocrit
+, the amount of whole blood that is made up of red blood cells.
+Mean corpuscular volume (MCV)
+, the average size of your red blood cells.
+Other names for a complete blood count: CBC, full blood count, blood cell count
+What is it used for?
+A complete blood count is often part of a
+routine checkup
+. It is also used to monitor a condition or treatment that may affect your blood cell counts such as infections,
+anemia
+,
+immune system disorders
+, and blood cancers.
+Why do I need a complete blood count?
+Your health care provider may have ordered a complete blood count as part of your checkup or to monitor your overall health. The test may also be used to:
+Help diagnose
+blood diseases
+, infections, immune system disorders, or other medical conditions
+Check for changes in an existing blood disorder
+What happens during a complete blood count?
+A health care professional will take a blood sample from a vein in your arm, using a small needle. After the needle is inserted, a small amount of blood will be collected into a test tube or vial. You may feel a little sting when the needle goes in or out. This usually takes less than five minutes.
+Will I need to do anything to prepare for the test?
+Usually, no special preparation is necessary for a complete blood count. But if your provider ordered other tests on your blood sample, you may need to
+fast
+Â (not eat or drink) for several hours before the test. Your provider will let you know if there are any special instructions.
+Are there any risks to the test?
+There is very little risk to having a blood test. You may experience slight pain or bruising at the spot where the needle went in, but most symptoms go away quickly.
+What do the results mean?
+A CBC counts the cells in your blood. There are many reasons your levels
+may not be in the normal range
+. For example:
+Abnormal levels of red blood cells, hemoglobin, or hematocrit may be a sign of
+dehydration
+, anemia,
+heart disease
+, or too little
+iron
+Â in your body.
+A low white cell count may be a sign of an
+autoimmune disorder
+,
+bone marrow disorder
+, or
+cancer
+.
+A high white cell count may be a sign of an infection or a
+reaction to a medicine
+.
+If any of your levels are abnormal, it doesn't always mean you have a medical condition that needs treatment. Diet, activity level, medicines, having a
+menstrual period
+, not drinking enough water, and other factors can affect the results. Talk with your provider to learn what your results mean.
+Learn more about
+laboratory tests, reference ranges, and understanding results
+.
+Is there anything else I need to know about a complete blood count?
+A complete blood count is only one tool your provider uses to learn about your health. Your provider will consider your medical history, symptoms, and other factors to make a diagnosis. You may also need additional tests.
+References
+Cleveland Clinic: Health Library: Diagnostics & Testing [Internet]. Cleveland (OH): Cleveland Clinic; c2024. Blood Tests; [reviewed 2022 Dec 06; cited 2024 Jul 17]; [about 16 screens]. Available from:
+https://my.clevelandclinic.org/health/diagnostics/24508-blood-tests
+Cleveland Clinic: Health Library: Diagnostics & Testing [Internet]. Cleveland (OH): Cleveland Clinic; c2024. Complete Blood Count (CBC); [reviewed 2024 Mar 14; cited 2024 Jul 17]; [about 14 screens]. Available from:
+https://my.clevelandclinic.org/health/diagnostics/4053-complete-blood-count
+El Brihi J, Pathak S. Normal and Abnormal Complete Blood Count With Differential. [Updated 2024 Jun 8]. In: StatPearls [Internet]. Treasure Island (FL): StatPearls Publishing; 2024 Jan-[cited 2024 Jul 17]; [about 6 screens]. Available from:
+https://www.ncbi.nlm.nih.gov/books/NBK604207/
+Mayo Clinic [Internet]. Mayo Foundation for Medical Education and Research; c1998-2024. Complete Blood Count (CBC); [cited 2024 Jul 17]; [about 6 screens]. Available from:
+https://www.mayoclinic.org/tests-procedures/complete-blood-count/about/pac-20384919
+Merck Manual Consumer Version [Internet]. Kenilworth (NJ): Merck & Co., Inc.; c2024. Complete Blood Count (CBC); [cited 2024 Jul 17]; [about 2 screens]. Available from:
+https://www.merckmanuals.com/home/multimedia/lab-tests/complete-blood-count
+Merck Manual Consumer Version [Internet]. Kenilworth (NJ): Merck & Co., Inc.; c2024. Tables: Complete Blood Count (CBC); [cited 2024 Jul 17]; [about 1 screen]. Available from:
+https://www.merckmanuals.com/home/multimedia/table/complete-blood-count-cbc
+National Cancer Institute [Internet]. Bethesda (MD): U.S. Department of Health and Human Services; NCI Dictionary of Cancer Terms: complete blood count [cited 2024 Jul 17]; [about 1 screen]. Available from:
+https://www.cancer.gov/publications/dictionaries/cancer-terms/def/complete-blood-count
+National Cancer Institute [Internet]. Bethesda (MD): U.S. Department of Health and Human Services; NCI Dictionary of Cancer Terms: hematocrit [cited 2024 Jul 17]; [about 1 screen]. Available from:
+https://www.cancer.gov/publications/dictionaries/cancer-terms/def/hematocrit
+National Heart, Lung, and Blood Institute [Internet]. Bethesda (MD): U.S. Department of Health and Human Services; Types of Blood Tests; [ cited 2024 Jul 17]; [about 6 screens]. Available from:
+https://www.nhlbi.nih.gov/health-topics/blood-tests
+National Heart, Lung, and Blood Institute [Internet]. Bethesda (MD): U.S. Department of Health and Human Services; Your Guide to Anemia; 2021 Sep [cited 2025 Jul 23]; [about 37 screens]. Available from:
+https://www.nhlbi.nih.gov/sites/default/files/publications/nhlbi-ospeec-your-guide-to-anemia-booklet-release-508.pdf
+Nemours KidsHealth [Internet]. Jacksonville (FL): The Nemours Foundation; c1995-2024. Getting a Blood Test; [reviewed 2021 Sep; cited 2024 Jul 17]; [about 4 screens]. Available from:
+https://kidshealth.org/en/parents/blood-tests.html
+Testing.com [Internet]. Seattle (WA).: OneCare Media; c2024. CBC Blood Test (Complete Blood Count); [modified 2022 Sep 28; cited 2024 Jul 17]; [about 12 screens]. Available from:
+https://www.testing.com/tests/complete-blood-count-cbc/
+Related Health Topics
+Anemia
+Bleeding Disorders
+Blood Count Tests
+Blood Disorders
+Related Medical Tests
+Blood Differential
+Hematocrit Test
+Hemoglobin Test
+How to Cope with Medical Test Anxiety
+How to Understand Your Lab Results
+MCV (Mean Corpuscular Volume)
+Platelet Tests
+Pneumococcal Disease Tests
+Red Blood Cell (RBC) Count
+Red Blood Cell (RBC) Indices
+What You Need to Know About Blood Testing
+White Blood Count (WBC)
+The information on this site should not be used as a substitute for professional medical care or advice. Contact a health care provider if you have questions about your health.
+Learn how to cite this page

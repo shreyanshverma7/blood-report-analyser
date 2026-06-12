@@ -1,0 +1,21 @@
+.claude/
+CLAUDE.md
+BRAINSTORM.md
+PLAN.md
+
+# Python
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+
+# Reports — never commit patient data
+*.pdf
+
+# Streamlit secrets (contains real keys when filled locally)
+.streamlit/secrets.toml

@@ -1,0 +1,151 @@
+You Are Here:
+Home
+→
+Medical Tests
+→
+Liver Function Tests
+URL of this page: https://medlineplus.gov/lab-tests/liver-function-tests/
+Liver Function Tests
+To use the sharing features on this page, please enable JavaScript.
+What are liver function tests?
+Liver function tests (also called a liver panel) use a sample of your blood to measure several substances made by your liver.
+The most common liver function tests measure:
+Albumin
+, a protein made in the liver.
+Total protein
+.
+This test measures the total amount of protein in your blood, which includes albumin and globulins. These proteins are mainly made in your liver.
+ALP
+(alkaline phosphatase),
+ALT
+(alanine transaminase),
+AST
+(aspartate aminotransferase), and
+GGT
+(gamma-glutamyl transferase). These are enzymes that are mainly made in your liver. Enzymes are proteins that speed up certain chemical reactions in your body.
+Bilirubin
+, a waste product your body makes when it breaks down old red blood cells. Your liver removes most of the bilirubin from your body.
+Lactate dehydrogenase (LDH)
+, an enzyme found in most of the tissues in your body, but some of the largest amounts are found in your liver.
+Prothrombin time (PT)
+, how long it takes your blood to clot. Prothrombin is a protein involved in blood clotting. It's made in your liver.
+Some of these tests can show how well your liver is working and others can show whether your liver may be damaged by
+liver disease
+or injury. But liver function tests alone usually can't diagnose specific diseases. So, if your results are abnormal, you'll usually need other tests to find the exact cause.
+Other names: liver panel, liver function panel, liver profile hepatic function panel, LFT
+What are they used for?
+Liver function tests are most often used to help:
+Find out if liver disease or damage could be causing certain symptoms
+Learn how serious liver disease is after it has been diagnosed
+Monitor liver disease over time and/or find out how well treatment is working
+Check for side effects of certain medicines that can affect the liver
+Why do I need liver function testing?
+Many liver function tests are included in a common blood test called a
+comprehensive metabolic panel (CMP)
+. Your provider often orders a CMP as part of your routine checkup to screen for liver and other diseases.
+You may also need liver function tests if you have symptoms of liver disease or damage. These include:
+Nausea and vomiting
+Lack of appetite
+Fatigue
+Weakness
+Jaundice
+, a condition that causes your skin and eyes to turn yellow
+Swelling and/or
+pain in your abdomen
+(belly)
+Swelling in your ankles and legs
+Dark-colored urine (pee) and/or light-colored stool (poop)
+Frequent
+itching
+Even if you don't have symptoms, you may need to be tested if you have a high risk for liver damage. Your risk may be high if you have:
+A family history of liver disease
+Alcohol use disorder
+(AUD)
+Obesity
+Diabetes
+Been taking certain medicines that may cause liver damage
+Hepatitis
+or have been exposed to hepatitis (swelling of the liver from infection or injury)
+If you already have liver disease, you may need to be tested to monitor your condition and/or to see how well your treatment is working.
+What happens during a liver function test?
+A health care professional will take a blood sample from a vein in your arm, using a small needle. After the needle is inserted, a small amount of blood will be collected into a test tube or vial. You may feel a little sting when the needle goes in or out. This usually takes less than five minutes.
+Will I need to do anything to prepare for the test?
+Your provider will tell you how to prepare for your test. You will probably need to
+fast
+(not eat or drink) for 10-12 hours before the test. Certain medicines can affect your test results, so be sure to tell your provider about everything you take. But don't stop taking any medicines unless your provider tells you to.
+Are there any risks to the test?
+There is very little risk to having a blood test. You may have slight pain or bruising at the spot where the needle was put in, but most symptoms go away quickly.
+What do the results mean?
+Understanding abnormal liver function test results is often complicated. So, it's best to ask your provider to explain what your results say about your health.
+If any of your liver function test results are abnormal, your provider will compare the results of all the substances that were measured. This is done to look for certain patterns of normal and abnormal results that suggest different types of liver conditions.
+In general, the results of your liver function tests can tell you if:
+Your liver is inflamed, which means you have hepatitis.
+You have hepatitis from drinking alcohol or other causes, such as infection.
+Your liver isn't working well and how weak it has become.
+You have a
+problem with your bile ducts
+. Bile is a digestive "juice" that your liver makes. Bile ducts are the tubes that carry bile through your liver and out of your liver.
+Medicines are harming your liver and how serious the damage is.
+Abnormal results don't always mean you have a problem with your liver. Other conditions can cause high or low levels of certain substances that these tests measure. For example, high levels of ALP can be a sign of bone disease or liver disease. So, your provider will also consider your symptoms, medical history, risk for liver disease, and any medicines you take.
+If you have been ill recently, certain types of abnormal results may be temporary. In this case, your provider may repeat the tests later to see if your results return to normal.
+Learn more about
+laboratory tests, reference ranges, and understanding results
+.
+References
+Cleveland Clinic [Internet]. Cleveland (OH): Cleveland Clinic; c2023. Liver Function Tests; [reviewed 2022 Nov 9; cited 2023 May 31]; [about 11 screens]. Available from:
+https://my.clevelandclinic.org/health/diagnostics/17662-liver-function-tests
+Lala V, Zubair M, Minter DA. Liver Function Tests. [Updated 2023 Apr 7; cited 2023 May 31]. In: StatPearls [Internet]. Treasure Island (FL): StatPearls Publishing; 2023 Jan-. Available from:
+https://www.ncbi.nlm.nih.gov/books/NBK482489/
+Mayo Clinic [Internet]. Mayo Foundation for Medical Education and Research; c1998-2023. Liver Function Tests; [cited 2023 Jun 1]; [about 12 screens]. Available from:
+https://www.mayoclinic.org/tests-procedures/liver-function-tests/about/pac-20394595
+Merck Manual Consumer Version [Internet]. Kenilworth (NJ): Merck & Co., Inc.; c2023. Liver Blood Tests; [reviewed 2021 Sep; cited 2023 Jun 1]; [about 3 screens]. Available from:
+https://www.merckmanuals.com/home/liver-and-gallbladder-disorders/diagnosis-of-liver-gallbladder-and-biliary-disorders/liver-blood-tests
+National Cancer Institute [Internet]. Bethesda (MD): U.S. Department of Health and Human Services; NCI Dictionary of Cancer Terms: bile duct; [cited 2023 May 31]; [about 1 screen]. Available from:
+https://www.cancer.gov/publications/dictionaries/cancer-terms/def/bile-duct
+Nemours KidsHealth [Internet]. Jacksonville (FL): The Nemours Foundation; c1995-2023. Blood Test: Liver Function Tests; [cited 2022 Nov]; [about 3 screens]. Available from:
+https://kidshealth.org/en/parents/labtest6.html
+Testing.com [Internet]. Seattle (WA): OneCare Media; c2023. Biopsy; [cited 2023 Jun 1]; [about 1 screen]. Available from:
+https://www.testing.com/glossary/#biopsy
+Testing.com [Internet]. Seattle (WA): OneCare Media; c2023. Lactate Dehydrogenase (LDH) Test; [modified 2022 Dec 6; cited 2023 Jun 1]; [about 10 screens]. Available from:
+https://www.testing.com/tests/lactate-dehydrogenase-ldh/
+Testing.com [Internet]. Seattle (WA): OneCare Media; c2023. Liver Panel Test; [modified 2022 Sep 28; cited 2023 Jun 1]; [about 11 screens]. Available from:
+https://www.testing.com/tests/liver-panel/
+UF Health: University of Florida Health [Internet]. Gainesville (FL): University of Florida Health; c2019. Liver function tests; [reviewed 2022 Jul 25; cited 2023 Jun 1]; [about 2 screens]. Available from:
+https://ufhealth.org/conditions-and-treatments/liver-function-tests
+University of Rochester Medical Center [Internet]. Rochester (NY): University of Rochester Medical Center; c2023. Health Encyclopedia: Liver Panel; [cited 2023 Jun 1]; [about 5 screens]. Available from:
+https://www.urmc.rochester.edu/encyclopedia/content.aspx?ContentTypeID=167&ContentID=liver_panel
+UW Health [Internet]. Madison (WI): University of Wisconsin Hospitals and Clinics Authority; c2023. Health Information: Liver Function Tests; [updated 2022 Sep 8; cited 2023 Jun 1]; [about 3 screens]. Available from:
+https://patient.uwhealth.org/healthwise/article/en-us/hw144350
+Related Health Topics
+Alcohol Use Disorder (AUD)
+Alcohol Use Disorder (AUD) Treatment
+Bile Duct Diseases
+Cirrhosis
+Fatty Liver Disease
+Hepatitis
+Hepatitis A
+Hepatitis B
+Hepatitis C
+Jaundice
+Liver Diseases
+Related Medical Tests
+Albumin Blood Test
+Alkaline Phosphatase
+ALT Blood Test
+AST Test
+Bilirubin Blood Test
+Bilirubin in Urine
+Comprehensive Metabolic Panel (CMP)
+Elastography
+Fasting for a Blood Test
+Gamma-glutamyl Transferase (GGT) Test
+Globulin Test
+How to Cope with Medical Test Anxiety
+How to Understand Your Lab Results
+Lactate Dehydrogenase (LDH) Test
+Prothrombin Time Test and INR (PT/INR)
+Total Protein and Albumin/Globulin (A/G) Ratio
+Urobilinogen in Urine
+What You Need to Know About Blood Testing
+The information on this site should not be used as a substitute for professional medical care or advice. Contact a health care provider if you have questions about your health.
+Learn how to cite this page

@@ -1,0 +1,50 @@
+import os
+from typing import List
+from dotenv import load_dotenv
+from supabase import create_client
+
+from src.ingestion.marker_extractor import Marker
+from src.ingestion.report_metadata import ReportMetadata
+
+load_dotenv()
+
+_client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
+
+
+def insert_report(metadata: ReportMetadata, raw_text: str) -> str:
+    row = {
+        "report_date": metadata.report_date,
+        "patient_age": metadata.patient_age,
+        "patient_gender": metadata.patient_gender,
+        "lab_name": metadata.lab_name,
+        "raw_text": raw_text,
+    }
+    result = _client.from_("reports").insert(row).execute()
+    return result.data[0]["id"]
+
+
+def get_reports() -> list:
+    result = (
+        _client.from_("reports")
+        .select("id, report_date, patient_age, patient_gender, lab_name")
+        .order("report_date", desc=True)
+        .execute()
+    )
+    return result.data or []
+
+
+def insert_markers(report_id: str, markers: List[Marker]) -> None:
+    rows = [
+        {
+            "report_id": report_id,
+            "name": m.name,
+            "value": m.value,
+            "value_text": m.value_text,
+            "unit": m.unit,
+            "ref_low": m.ref_low,
+            "ref_high": m.ref_high,
+            "flag": m.flag,
+        }
+        for m in markers
+    ]
+    _client.from_("markers").insert(rows).execute()

@@ -1,0 +1,104 @@
+import os
+from typing import Optional
+from dotenv import load_dotenv
+from sentence_transformers import SentenceTransformer
+from qdrant_client import QdrantClient
+from qdrant_client.models import Filter, FieldCondition, MatchValue
+from supabase import create_client
+from langchain_core.tools import tool
+
+load_dotenv()
+
+_MODEL = SentenceTransformer("all-MiniLM-L6-v2")
+_QDRANT = QdrantClient(
+    url=os.environ["QDRANT_URL"],
+    api_key=os.environ["QDRANT_API_KEY"],
+)
+_SUPABASE = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
+
+
+@tool
+def query_my_reports(question: str, report_id: Optional[str] = None) -> str:
+    """Search the user's blood report panels for information relevant to the question.
+    If report_id is provided, filter results to that specific report only.
+    Returns a summary of the most relevant panel findings."""
+    vector = _MODEL.encode(question, normalize_embeddings=True).tolist()
+
+    query_filter = None
+    if report_id:
+        query_filter = Filter(
+            must=[FieldCondition(key="report_id", match=MatchValue(value=report_id))]
+        )
+
+    results = _QDRANT.query_points(
+        collection_name="report_chunks",
+        query=vector,
+        query_filter=query_filter,
+        limit=3,
+        with_payload=True,
+    )
+
+    if not results.points:
+        return "No relevant report data found."
+
+    lines = []
+    for point in results.points:
+        panel = point.payload.get("panel", "Unknown")
+        summary = point.payload.get("summary_text", "")
+        lines.append(f"[{panel}] {summary}")
+
+    return "\n\n".join(lines)
+
+
+@tool
+def compare_reports(marker_name: str) -> str:
+    """Compare values of a specific blood marker across all ingested reports, ordered by date.
+    Returns a chronological comparison showing how the marker has changed over time."""
+    result = (
+        _SUPABASE.from_("markers")
+        .select("name, value, unit, flag, reports(report_date)")
+        .ilike("name", f"%{marker_name}%")
+        .execute()
+    )
+
+    rows = result.data
+    if not rows:
+        return f"No data found for marker: {marker_name}"
+
+    rows.sort(key=lambda r: r.get("reports", {}).get("report_date") or "")
+
+    name = rows[0]["name"]
+    lines = [f"Marker: {name}"]
+    for row in rows:
+        date = (row.get("reports") or {}).get("report_date", "unknown date")
+        value = row.get("value")
+        unit = row.get("unit") or ""
+        flag = row.get("flag") or "no flag"
+        lines.append(f"  {date}: {value} {unit} ({flag})")
+
+    return "\n".join(lines)
+
+
+@tool
+def search_medical_kb(query: str) -> str:
+    """Search the medical knowledge base for information about lab tests, markers, and health conditions.
+    Returns relevant excerpts from medical reference documents with source citations."""
+    vector = _MODEL.encode(query, normalize_embeddings=True).tolist()
+
+    results = _QDRANT.query_points(
+        collection_name="medical_kb",
+        query=vector,
+        limit=3,
+        with_payload=True,
+    )
+
+    if not results.points:
+        return "No relevant medical information found."
+
+    lines = []
+    for point in results.points:
+        source = point.payload.get("source", "unknown")
+        text = point.payload.get("text", "")[:300]
+        lines.append(f"[{source}] {text}")
+
+    return "\n\n".join(lines)
