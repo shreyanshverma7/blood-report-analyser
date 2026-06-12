@@ -36,7 +36,7 @@ A RAG-powered blood report analysis app. Upload a PDF blood report, and chat wit
 ## Local setup
 
 ```bash
-git clone https://github.com/shreyanshverma7/crewai-blood-report-analyser-bot.git
+git clone https://github.com/shreyanshverma7/blood-report-analyser.git
 cd crewai-blood-report-analyser-bot
 
 python3 -m venv venv && source venv/bin/activate
