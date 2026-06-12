@@ -1,4 +1,4 @@
-# Blood Report Analyser v2
+# Blood Report Analyser
 
 A RAG-powered blood report analysis app. Upload a PDF blood report, and chat with it — ask about your abnormal markers, compare values across reports, or look up what a marker means in medical literature.
 
