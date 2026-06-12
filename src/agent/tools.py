@@ -85,16 +85,15 @@ def compare_reports(marker_name: str) -> str:
 
     rows.sort(key=lambda r: r.get("reports", {}).get("report_date") or "")
 
-    name = rows[0]["name"]
-    lines = [f"Marker: {name}"]
-    for row in rows:
-        date = (row.get("reports") or {}).get("report_date", "unknown date")
-        value = row.get("value")
-        unit = row.get("unit") or ""
-        flag = row.get("flag") or "no flag"
-        lines.append(f"  {date}: {value} {unit} ({flag})")
-
-    return "\n".join(lines)
+    header = f"## {marker_name} across all reports\n\n| Date | Value | Unit | Flag |\n|------|-------|------|------|\n"
+    table_rows = "\n".join(
+        f"| {(row.get('reports') or {}).get('report_date') or 'Unknown'} "
+        f"| {row.get('value')} "
+        f"| {row.get('unit') or '—'} "
+        f"| {row.get('flag').upper() if row.get('flag') else '—'} |"
+        for row in rows
+    )
+    return header + table_rows
 
 
 @tool

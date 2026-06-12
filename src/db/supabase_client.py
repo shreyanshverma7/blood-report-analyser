@@ -30,6 +30,18 @@ def insert_report(metadata: ReportMetadata, raw_text: str) -> str:
     return result.data[0]["id"]
 
 
+def get_existing_report(lab_name: str, report_date: str) -> str | None:
+    result = (
+        _get_client().from_("reports")
+        .select("id")
+        .eq("lab_name", lab_name)
+        .eq("report_date", report_date)
+        .limit(1)
+        .execute()
+    )
+    return result.data[0]["id"] if result.data else None
+
+
 def get_reports() -> list:
     result = (
         _get_client().from_("reports")
