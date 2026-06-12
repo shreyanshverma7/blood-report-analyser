@@ -8,7 +8,14 @@ from src.ingestion.report_metadata import ReportMetadata
 
 load_dotenv()
 
-_client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
+_client = None
+
+
+def _get_client():
+    global _client
+    if _client is None:
+        _client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
+    return _client
 
 
 def insert_report(metadata: ReportMetadata, raw_text: str) -> str:
@@ -19,13 +26,13 @@ def insert_report(metadata: ReportMetadata, raw_text: str) -> str:
         "lab_name": metadata.lab_name,
         "raw_text": raw_text,
     }
-    result = _client.from_("reports").insert(row).execute()
+    result = _get_client().from_("reports").insert(row).execute()
     return result.data[0]["id"]
 
 
 def get_reports() -> list:
     result = (
-        _client.from_("reports")
+        _get_client().from_("reports")
         .select("id, report_date, patient_age, patient_gender, lab_name")
         .order("report_date", desc=True)
         .execute()
@@ -47,4 +54,4 @@ def insert_markers(report_id: str, markers: List[Marker]) -> None:
         }
         for m in markers
     ]
-    _client.from_("markers").insert(rows).execute()
+    _get_client().from_("markers").insert(rows).execute()
