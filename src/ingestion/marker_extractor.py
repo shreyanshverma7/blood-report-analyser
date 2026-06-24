@@ -34,17 +34,18 @@ _METHOD_LINE = re.compile(r"^\(.*\)$")
 _NUMERIC = re.compile(r"^\d+\.?\d*$")
 
 
-def _compute_flag(
+def compute_flag(
     value: Optional[float],
     ref_low: Optional[float],
     ref_high: Optional[float],
 ) -> Optional[str]:
+    """Deterministic high/low/normal from numeric bounds. Single source of truth for flags."""
     if value is None:
         return None
-    if ref_low is not None and value < ref_low:
-        return "low"
     if ref_high is not None and value > ref_high:
         return "high"
+    if ref_low is not None and value < ref_low:
+        return "low"
     if ref_low is not None or ref_high is not None:
         return "normal"
     return None
@@ -104,7 +105,7 @@ def _parse_line(line: str) -> Optional[Marker]:
 
     name = " ".join(tokens)
 
-    flag = _compute_flag(value, ref_low, ref_high)
+    flag = compute_flag(value, ref_low, ref_high)
     return Marker(
         name=name, value=value, unit=unit,
         ref_low=ref_low, ref_high=ref_high, flag=flag,
