@@ -1,6 +1,11 @@
 import sys
 import os
+from pathlib import Path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
+# Load .env first (override=True so blank secrets.toml values don't win locally)
+from dotenv import load_dotenv
+load_dotenv(Path(__file__).parent.parent.parent / ".env", override=True)
 
 try:
     import streamlit as st
@@ -9,10 +14,10 @@ try:
         "QDRANT_URL", "QDRANT_API_KEY", "LANGCHAIN_API_KEY",
         "LANGCHAIN_TRACING_V2", "LANGCHAIN_PROJECT",
     ]:
-        if key in st.secrets:
+        if key in st.secrets and st.secrets[key]:
             os.environ[key] = st.secrets[key]
 except Exception:
-    pass  # local — .env is loaded by dotenv in each module
+    pass
 
 import uuid
 import tempfile
@@ -24,7 +29,43 @@ from src.ingestion.pipeline import ingest
 from src.ingestion.pdf_parser import extract_text_from_pdf
 from src.ingestion.marker_extractor import extract_markers
 from src.agent.graph import create_graph
+from src.agent.response_parser import parse_agent_response, strip_json_block
 from src.db.supabase_client import get_reports
+
+# ── Response renderer ─────────────────────────────────────────────────────────
+FLAG_COLORS = {"high": "red", "low": "orange", "normal": "green"}
+
+
+def render_assistant_message(text: str):
+    """Render an assistant turn as structured cards when the <json> envelope
+    parses, else as plain markdown with the raw block stripped."""
+    resp = parse_agent_response(text)
+    if resp is None:
+        st.markdown(strip_json_block(text))
+        return
+
+    st.markdown(resp.summary)
+
+    if resp.flagged_markers:
+        st.markdown("**Flagged markers**")
+        for m in resp.flagged_markers:
+            with st.container(border=True):
+                c1, c2, c3 = st.columns([3, 2, 1])
+                c1.markdown(f"**{m.name}**")
+                value = "—" if m.value is None else str(m.value)
+                unit = f" {m.unit}" if m.unit else ""
+                c2.markdown(f"{value}{unit}")
+                color = FLAG_COLORS.get((m.flag or "").lower(), "gray")
+                c3.markdown(f":{color}[{(m.flag or 'N/A').upper()}]")
+
+    if resp.recommendations:
+        st.markdown("**Recommendations**")
+        for r in resp.recommendations:
+            st.markdown(f"- {r}")
+
+    if resp.sources:
+        st.caption("Sources: " + ", ".join(resp.sources))
+
 
 # ── Module-level singletons ───────────────────────────────────────────────────
 _graph = create_graph()
@@ -83,7 +124,10 @@ st.title("Blood Report Chat")
 
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
-        st.markdown(msg["content"])
+        if msg["role"] == "assistant":
+            render_assistant_message(msg["content"])
+        else:
+            st.markdown(msg["content"])
 
 if prompt := st.chat_input("Ask about your blood report…"):
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -92,12 +136,12 @@ if prompt := st.chat_input("Ask about your blood report…"):
 
     config = {"configurable": {"thread_id": st.session_state.thread_id}}
     with st.chat_message("assistant"):
-        with st.spinner("Thinking…"):
+        with st.spinner("Analyzing…"):
             result = _graph.invoke(
                 {"messages": [HumanMessage(content=prompt)]},
                 config,
             )
-            response = result["messages"][-1].content
-        st.markdown(response)
+            full_text = result["messages"][-1].content
+        render_assistant_message(full_text)
 
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state.messages.append({"role": "assistant", "content": full_text})

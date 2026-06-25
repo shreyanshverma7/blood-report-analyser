@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import List
 from dotenv import load_dotenv
 from supabase import create_client
@@ -6,7 +7,7 @@ from supabase import create_client
 from src.ingestion.marker_extractor import Marker
 from src.ingestion.report_metadata import ReportMetadata
 
-load_dotenv()
+load_dotenv(Path(__file__).parent.parent.parent / ".env", override=True)
 
 _client = None
 
