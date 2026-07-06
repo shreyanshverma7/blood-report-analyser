@@ -9,6 +9,13 @@ class ReportMetadata(BaseModel):
     report_date: Optional[str] = None
     lab_name: Optional[str] = None
 
+    def merge_missing_from(self, other) -> None:
+        """Fill each None field from `other` — duck-typed so the LLM
+        extractor's metadata model works without a shared base class."""
+        for field in ("patient_age", "patient_gender", "report_date", "lab_name"):
+            if getattr(self, field) is None and getattr(other, field, None):
+                setattr(self, field, getattr(other, field))
+
 
 _AGE = re.compile(r"Age\s*:\s*(\d+)\s*Years", re.IGNORECASE)
 _GENDER = re.compile(r"Gender\s*:\s*(Male|Female)", re.IGNORECASE)

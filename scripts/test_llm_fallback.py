@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 logging.basicConfig(level=logging.INFO, format="%(name)s — %(message)s")
 
 from src.ingestion.pipeline import ingest
-from src.db.supabase_client import _get_client
+from src.db.supabase_client import get_client
 
 SAMPLES = [
     "samples/complete-blood-count-(cbc).pdf",
@@ -20,11 +20,12 @@ for pdf_path in SAMPLES:
     print(f"FILE: {os.path.basename(pdf_path)}")
     print("=" * 60)
 
-    report_id = ingest(pdf_path)
-    print(f"report_id: {report_id}")
+    result = ingest(pdf_path)
+    report_id = result.report_id
+    print(f"report_id: {report_id} (path: {result.extraction_path})")
 
     report_meta = (
-        _get_client()
+        get_client()
         .from_("reports")
         .select("report_date, lab_name, patient_age, patient_gender")
         .eq("id", report_id)
@@ -38,7 +39,7 @@ for pdf_path in SAMPLES:
     print(f"  patient_gender: {report_meta.get('patient_gender')}")
 
     markers = (
-        _get_client()
+        get_client()
         .from_("markers")
         .select("name, value, unit, ref_low, ref_high, flag")
         .eq("report_id", report_id)

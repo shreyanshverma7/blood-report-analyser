@@ -51,20 +51,21 @@ def get_reports() -> list:
 
 
 def get_report(report_id: str) -> dict | None:
+    # maybe_single, not single: single() raises APIError on zero rows
     result = (
         get_client().from_("reports")
         .select("id, report_date, patient_age, patient_gender, lab_name")
         .eq("id", report_id)
-        .single()
+        .maybe_single()
         .execute()
     )
-    return result.data
+    return result.data if result else None
 
 
 def get_markers_for_report(report_id: str) -> list:
     result = (
         get_client().from_("markers")
-        .select("name, value, unit, ref_low, ref_high, flag")
+        .select("name, value, value_text, unit, ref_low, ref_high, flag")
         .eq("report_id", report_id)
         .execute()
     )
@@ -72,6 +73,8 @@ def get_markers_for_report(report_id: str) -> list:
 
 
 def insert_markers(report_id: str, markers: List[Marker]) -> None:
+    if not markers:
+        return  # PostgREST raises on an empty insert payload
     rows = [
         {
             "report_id": report_id,

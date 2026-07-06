@@ -43,10 +43,12 @@ def query_my_reports(question: str, report_id: Optional[str] = None) -> str:
 def compare_reports(marker_name: str) -> str:
     """Compare values of a specific blood marker across all ingested reports, ordered by date.
     Returns a chronological comparison showing how the marker has changed over time."""
+    # Escape LIKE wildcards so a name containing % or _ can't match everything
+    pattern = marker_name.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
     result = (
         get_client().from_("markers")
         .select("name, value, unit, flag, reports(report_date)")
-        .ilike("name", f"%{marker_name}%")
+        .ilike("name", f"%{pattern}%")
         .execute()
     )
 
@@ -54,7 +56,8 @@ def compare_reports(marker_name: str) -> str:
     if not rows:
         return f"No data found for marker: {marker_name}"
 
-    rows.sort(key=lambda r: r.get("reports", {}).get("report_date") or "")
+    # (r.get("reports") or {}): the joined parent can be present-but-None
+    rows.sort(key=lambda r: (r.get("reports") or {}).get("report_date") or "")
 
     header = f"## {marker_name} across all reports\n\n| Date | Value | Unit | Flag |\n|------|-------|------|------|\n"
     table_rows = "\n".join(

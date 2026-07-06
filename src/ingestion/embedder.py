@@ -39,7 +39,13 @@ def build_summary(panel_name: str, markers: List[Marker]) -> str:
     parts = [f"{panel_name} panel:"]
     for m in markers:
         if m.value is not None:
-            flag_str = f" ({m.flag.upper()})" if m.flag and m.flag != "normal" else " (normal)"
+            if m.flag and m.flag != "normal":
+                flag_str = f" ({m.flag.upper()})"
+            elif m.flag == "normal":
+                flag_str = " (normal)"
+            else:
+                # flag is None when there's no reference range — don't assert normality
+                flag_str = " (no reference range)"
             ref_str = ""
             if m.ref_low is not None and m.ref_high is not None:
                 ref_str = f", ref {m.ref_low}-{m.ref_high}"
@@ -55,6 +61,9 @@ def build_summary(panel_name: str, markers: List[Marker]) -> str:
 
 
 def embed_report(report_id: str, markers: List[Marker]) -> None:
+    if not markers:
+        return  # encode([]) and upsert(points=[]) both raise
+
     # Group markers by panel
     groups: Dict[str, List[Marker]] = {}
     for m in markers:
