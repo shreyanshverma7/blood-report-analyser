@@ -2,6 +2,7 @@ from typing import Optional
 from qdrant_client.models import Filter, FieldCondition, MatchValue
 from langchain_core.tools import tool
 
+from src.core import user_context
 from src.core.clients import get_embedding_model, get_qdrant
 from src.db.supabase_client import get_client
 
@@ -11,13 +12,17 @@ def query_my_reports(question: str, report_id: Optional[str] = None) -> str:
     """Search the user's blood report panels for information relevant to the question.
     If report_id is provided, filter results to that specific report only.
     Returns a summary of the most relevant panel findings."""
+    user_id = user_context.user_id()
+    if not user_id:
+        return "No signed-in user — report data is unavailable."
+
     vector = get_embedding_model().encode(question, normalize_embeddings=True).tolist()
 
-    query_filter = None
+    # Qdrant has no RLS: the user_id filter is the isolation boundary here
+    must = [FieldCondition(key="user_id", match=MatchValue(value=user_id))]
     if report_id:
-        query_filter = Filter(
-            must=[FieldCondition(key="report_id", match=MatchValue(value=report_id))]
-        )
+        must.append(FieldCondition(key="report_id", match=MatchValue(value=report_id)))
+    query_filter = Filter(must=must)
 
     results = get_qdrant().query_points(
         collection_name="report_chunks",

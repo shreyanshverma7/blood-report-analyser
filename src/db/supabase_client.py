@@ -1,19 +1,45 @@
 import os
 from typing import List
-from supabase import create_client
+from supabase import Client, create_client
 
 from src import config  # noqa: F401 — loads env before the client is built
+from src.core import user_context
 from src.ingestion.marker_extractor import Marker
 from src.ingestion.report_metadata import ReportMetadata
 
-_client = None
+# Clients keyed by access token ("" = anonymous). One shared client whose auth
+# header is mutated per request would race across concurrent user sessions.
+_clients: dict[str, Client] = {}
 
 
-def get_client():
-    global _client
-    if _client is None:
-        _client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
-    return _client
+def new_anon_client() -> Client:
+    """Fresh anon-key client — used by app.py for the per-session auth flow."""
+    return create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_ANON_KEY"])
+
+
+def get_client() -> Client:
+    """Anon-key client carrying the current user's JWT (from user_context),
+    so RLS scopes every query to that user. Without a signed-in user the
+    client is anonymous and RLS returns nothing."""
+    token = user_context.access_token() or ""
+    client = _clients.get(token)
+    if client is None:
+        if len(_clients) > 16:  # tokens rotate hourly; don't accumulate stale pools
+            _clients.clear()
+        client = new_anon_client()
+        if token:
+            client.postgrest.auth(token)
+        _clients[token] = client
+    return client
+
+
+def get_service_client() -> Client:
+    """service_role client — bypasses RLS. Offline scripts only; never call
+    this from the app path."""
+    key = os.environ.get("SUPABASE_SERVICE_KEY")
+    if not key:
+        raise RuntimeError("SUPABASE_SERVICE_KEY not set (offline scripts only)")
+    return create_client(os.environ["SUPABASE_URL"], key)
 
 
 def insert_report(metadata: ReportMetadata, raw_text: str) -> str:

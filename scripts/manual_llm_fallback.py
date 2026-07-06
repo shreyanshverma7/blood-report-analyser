@@ -1,3 +1,8 @@
+# Manual driver, not a test: ingests the sample PDFs into the LIVE database.
+# NOTE: after the auth migration (scripts/setup_auth.sql), inserts require a
+# signed-in user JWT (reports.user_id is NOT NULL DEFAULT auth.uid()), so the
+# ingest calls here will fail — upload through the app instead. The read-back
+# below uses the service client and still works.
 import logging
 import sys
 import os
@@ -7,7 +12,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 logging.basicConfig(level=logging.INFO, format="%(name)s — %(message)s")
 
 from src.ingestion.pipeline import ingest
-from src.db.supabase_client import get_client
+from src.db.supabase_client import get_service_client as get_client
 
 SAMPLES = [
     "samples/complete-blood-count-(cbc).pdf",

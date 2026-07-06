@@ -11,11 +11,12 @@ import tempfile
 import streamlit as st
 from langchain_core.messages import HumanMessage
 
+from src.core import user_context
 from src.ingestion.pipeline import ingest
 from src.ingestion.errors import ExtractionError
 from src.agent.graph import create_graph
 from src.agent.response_parser import parse_agent_response, strip_json_block
-from src.db.supabase_client import get_reports
+from src.db.supabase_client import get_reports, new_anon_client
 from src.export.pdf_generator import generate_report_pdf
 
 logger = logging.getLogger(__name__)
@@ -69,13 +70,15 @@ def _build_graph():
     return create_graph()
 
 
+# user_key: st.cache_data is process-global, so without it one user's cached
+# rows would be served to every other session
 @st.cache_data(ttl=30)
-def _list_reports() -> list:
+def _list_reports(user_key: str) -> list:
     return get_reports()
 
 
 @st.cache_data(ttl=60)
-def _report_pdf(report_id: str, summary: str | None) -> bytes:
+def _report_pdf(user_key: str, report_id: str, summary: str | None) -> bytes:
     return generate_report_pdf(report_id, summary)
 
 
@@ -91,6 +94,53 @@ def _last_agent_summary() -> str | None:
 
 _graph = _build_graph()
 
+# ── Auth gate ─────────────────────────────────────────────────────────────────
+# One anon client per browser session; it holds and auto-refreshes the user's
+# tokens. Everything below the gate runs only with a signed-in user.
+if "sb_auth" not in st.session_state:
+    st.session_state.sb_auth = new_anon_client()
+
+_session = None
+try:
+    _session = st.session_state.sb_auth.auth.get_session()  # refreshes if expired
+except Exception:
+    logger.exception("Session refresh failed")
+
+if _session is None:
+    st.title("Blood Report Analyser")
+    st.caption("Log in to upload reports and chat about your results.")
+    tab_login, tab_signup = st.tabs(["Log in", "Sign up"])
+    with tab_login, st.form("login"):
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+        if st.form_submit_button("Log in"):
+            try:
+                st.session_state.sb_auth.auth.sign_in_with_password(
+                    {"email": email, "password": password}
+                )
+                st.rerun()
+            except Exception:
+                st.error("Login failed — check your email and password.")
+    with tab_signup, st.form("signup"):
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+        if st.form_submit_button("Sign up"):
+            try:
+                res = st.session_state.sb_auth.auth.sign_up(
+                    {"email": email, "password": password}
+                )
+                if res.session is None:
+                    st.info("Check your email to confirm the account, then log in.")
+                else:
+                    st.rerun()
+            except Exception:
+                st.error("Sign-up failed — try a different email or a longer password.")
+    st.stop()
+
+# Contextvars are per-thread-of-execution: set them on every rerun so the DB
+# layer and Qdrant filters act as this user.
+user_context.set_current(_session.user.id, _session.access_token)
+
 # ── Session state defaults ────────────────────────────────────────────────────
 if "thread_id" not in st.session_state:
     st.session_state.thread_id = str(uuid.uuid4())
@@ -104,6 +154,15 @@ if "ingested_files" not in st.session_state:
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.header("Blood Report Analyser")
+    st.caption(f"Signed in as {_session.user.email}")
+    if st.button("Log out"):
+        try:
+            st.session_state.sb_auth.auth.sign_out()
+        except Exception:
+            logger.exception("Sign-out failed")
+        user_context.clear()
+        st.session_state.clear()
+        st.rerun()
 
     uploaded = st.file_uploader("Upload Blood Report PDF", type=["pdf"])
     if uploaded is not None and uploaded.name not in st.session_state.ingested_files:
@@ -136,7 +195,7 @@ with st.sidebar:
 
     st.divider()
 
-    reports = _list_reports()
+    reports = _list_reports(_session.user.id)
     if reports:
         labels = {
             r["id"]: f"{r['lab_name'] or 'Unknown Lab'} — {r['report_date']} ({r['patient_age']}y {r['patient_gender']})"
@@ -152,7 +211,7 @@ with st.sidebar:
         if selected:
             report = next(r for r in reports if r["id"] == selected)
             try:
-                pdf_bytes = _report_pdf(selected, _last_agent_summary())
+                pdf_bytes = _report_pdf(_session.user.id, selected, _last_agent_summary())
             except Exception:
                 logger.exception("PDF export failed")
                 st.caption("PDF export is unavailable for this report.")

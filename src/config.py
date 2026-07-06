@@ -14,12 +14,18 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 REQUIRED_KEYS = (
     "GROQ_API_KEY",
     "SUPABASE_URL",
-    "SUPABASE_SERVICE_KEY",
+    "SUPABASE_ANON_KEY",
     "QDRANT_URL",
     "QDRANT_API_KEY",
 )
-# Opt-in observability — absent means LangSmith tracing stays off.
-OPTIONAL_KEYS = ("LANGCHAIN_API_KEY", "LANGCHAIN_TRACING_V2", "LANGCHAIN_PROJECT")
+# SUPABASE_SERVICE_KEY bypasses RLS: offline scripts only, never the app path.
+# LANGCHAIN_* are opt-in observability — absent means LangSmith tracing stays off.
+OPTIONAL_KEYS = (
+    "SUPABASE_SERVICE_KEY",
+    "LANGCHAIN_API_KEY",
+    "LANGCHAIN_TRACING_V2",
+    "LANGCHAIN_PROJECT",
+)
 
 
 def _read_streamlit_secrets() -> dict:

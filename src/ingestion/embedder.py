@@ -2,6 +2,7 @@ import uuid
 from typing import List, Dict
 from qdrant_client.models import PointStruct
 
+from src.core import user_context
 from src.core.clients import get_embedding_model, get_qdrant
 from src.ingestion.marker_extractor import Marker
 
@@ -81,6 +82,7 @@ def embed_report(report_id: str, markers: List[Marker]) -> None:
             vector=embeddings[i].tolist(),
             payload={
                 "report_id": report_id,
+                "user_id": user_context.user_id(),
                 "panel": panel,
                 "summary_text": summaries[panel],
             },
