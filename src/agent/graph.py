@@ -51,13 +51,6 @@ _SYSTEM_PROMPT = (
 )
 
 
-def _agent_node(state: MessagesState):
-    llm = get_llm().bind_tools(TOOLS)
-    messages = [SystemMessage(content=_SYSTEM_PROMPT)] + state["messages"]
-    response = llm.invoke(messages)
-    return {"messages": [response]}
-
-
 def _should_continue(state: MessagesState):
     last = state["messages"][-1]
     if hasattr(last, "tool_calls") and last.tool_calls:
@@ -66,9 +59,16 @@ def _should_continue(state: MessagesState):
 
 
 def create_graph(checkpointer=None):
+    llm = get_llm().bind_tools(TOOLS)
+
+    def agent_node(state: MessagesState):
+        messages = [SystemMessage(content=_SYSTEM_PROMPT)] + state["messages"]
+        response = llm.invoke(messages)
+        return {"messages": [response]}
+
     builder = StateGraph(MessagesState)
 
-    builder.add_node("agent", _agent_node)
+    builder.add_node("agent", agent_node)
     builder.add_node("tools", ToolNode(TOOLS))
 
     builder.set_entry_point("agent")

@@ -1,18 +1,15 @@
 import os
-from pathlib import Path
 from typing import List
-from dotenv import load_dotenv
 from supabase import create_client
 
+from src import config  # noqa: F401 — loads env before the client is built
 from src.ingestion.marker_extractor import Marker
 from src.ingestion.report_metadata import ReportMetadata
-
-load_dotenv(Path(__file__).parent.parent.parent / ".env", override=True)
 
 _client = None
 
 
-def _get_client():
+def get_client():
     global _client
     if _client is None:
         _client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
@@ -27,13 +24,13 @@ def insert_report(metadata: ReportMetadata, raw_text: str) -> str:
         "lab_name": metadata.lab_name,
         "raw_text": raw_text,
     }
-    result = _get_client().from_("reports").insert(row).execute()
+    result = get_client().from_("reports").insert(row).execute()
     return result.data[0]["id"]
 
 
 def get_existing_report(lab_name: str, report_date: str) -> str | None:
     result = (
-        _get_client().from_("reports")
+        get_client().from_("reports")
         .select("id")
         .eq("lab_name", lab_name)
         .eq("report_date", report_date)
@@ -45,9 +42,30 @@ def get_existing_report(lab_name: str, report_date: str) -> str | None:
 
 def get_reports() -> list:
     result = (
-        _get_client().from_("reports")
+        get_client().from_("reports")
         .select("id, report_date, patient_age, patient_gender, lab_name")
         .order("report_date", desc=True)
+        .execute()
+    )
+    return result.data or []
+
+
+def get_report(report_id: str) -> dict | None:
+    result = (
+        get_client().from_("reports")
+        .select("id, report_date, patient_age, patient_gender, lab_name")
+        .eq("id", report_id)
+        .single()
+        .execute()
+    )
+    return result.data
+
+
+def get_markers_for_report(report_id: str) -> list:
+    result = (
+        get_client().from_("markers")
+        .select("name, value, unit, ref_low, ref_high, flag")
+        .eq("report_id", report_id)
         .execute()
     )
     return result.data or []
@@ -67,4 +85,4 @@ def insert_markers(report_id: str, markers: List[Marker]) -> None:
         }
         for m in markers
     ]
-    _get_client().from_("markers").insert(rows).execute()
+    get_client().from_("markers").insert(rows).execute()

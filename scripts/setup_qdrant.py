@@ -1,9 +1,14 @@
 import os
-from dotenv import load_dotenv
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
 
-load_dotenv()
+from src import config
+
+config.validate()
 
 client = QdrantClient(
     url=os.environ["QDRANT_URL"],

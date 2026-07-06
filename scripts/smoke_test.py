@@ -1,8 +1,11 @@
 import os
 import sys
-from dotenv import load_dotenv
 
-load_dotenv()
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+from src import config
+
+config.validate()
 
 failures = []
 

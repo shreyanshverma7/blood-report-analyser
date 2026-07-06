@@ -1,38 +1,9 @@
-import os
 from typing import Optional
-from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, FieldCondition, MatchValue
-from supabase import create_client
 from langchain_core.tools import tool
 
-load_dotenv()
-
-_MODEL = None
-_QDRANT = None
-_SUPABASE = None
-
-
-def _get_model():
-    global _MODEL
-    if _MODEL is None:
-        _MODEL = SentenceTransformer("all-MiniLM-L6-v2")
-    return _MODEL
-
-
-def _get_qdrant():
-    global _QDRANT
-    if _QDRANT is None:
-        _QDRANT = QdrantClient(url=os.environ["QDRANT_URL"], api_key=os.environ["QDRANT_API_KEY"])
-    return _QDRANT
-
-
-def _get_supabase():
-    global _SUPABASE
-    if _SUPABASE is None:
-        _SUPABASE = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
-    return _SUPABASE
+from src.core.clients import get_embedding_model, get_qdrant
+from src.db.supabase_client import get_client
 
 
 @tool
@@ -40,7 +11,7 @@ def query_my_reports(question: str, report_id: Optional[str] = None) -> str:
     """Search the user's blood report panels for information relevant to the question.
     If report_id is provided, filter results to that specific report only.
     Returns a summary of the most relevant panel findings."""
-    vector = _get_model().encode(question, normalize_embeddings=True).tolist()
+    vector = get_embedding_model().encode(question, normalize_embeddings=True).tolist()
 
     query_filter = None
     if report_id:
@@ -48,7 +19,7 @@ def query_my_reports(question: str, report_id: Optional[str] = None) -> str:
             must=[FieldCondition(key="report_id", match=MatchValue(value=report_id))]
         )
 
-    results = _get_qdrant().query_points(
+    results = get_qdrant().query_points(
         collection_name="report_chunks",
         query=vector,
         query_filter=query_filter,
@@ -73,7 +44,7 @@ def compare_reports(marker_name: str) -> str:
     """Compare values of a specific blood marker across all ingested reports, ordered by date.
     Returns a chronological comparison showing how the marker has changed over time."""
     result = (
-        _get_supabase().from_("markers")
+        get_client().from_("markers")
         .select("name, value, unit, flag, reports(report_date)")
         .ilike("name", f"%{marker_name}%")
         .execute()
@@ -100,9 +71,9 @@ def compare_reports(marker_name: str) -> str:
 def search_medical_kb(query: str) -> str:
     """Search the medical knowledge base for information about lab tests, markers, and health conditions.
     Returns relevant excerpts from medical reference documents with source citations."""
-    vector = _get_model().encode(query, normalize_embeddings=True).tolist()
+    vector = get_embedding_model().encode(query, normalize_embeddings=True).tolist()
 
-    results = _get_qdrant().query_points(
+    results = get_qdrant().query_points(
         collection_name="medical_kb",
         query=vector,
         limit=3,

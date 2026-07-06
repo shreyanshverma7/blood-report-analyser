@@ -1,23 +1,8 @@
 import sys
 import os
-from pathlib import Path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-# Load .env first (override=True so blank secrets.toml values don't win locally)
-from dotenv import load_dotenv
-load_dotenv(Path(__file__).parent.parent.parent / ".env", override=True)
-
-try:
-    import streamlit as st
-    for key in [
-        "GROQ_API_KEY", "SUPABASE_URL", "SUPABASE_SERVICE_KEY",
-        "QDRANT_URL", "QDRANT_API_KEY", "LANGCHAIN_API_KEY",
-        "LANGCHAIN_TRACING_V2", "LANGCHAIN_PROJECT",
-    ]:
-        if key in st.secrets and st.secrets[key]:
-            os.environ[key] = st.secrets[key]
-except Exception:
-    pass
+from src import config  # loads .env + Streamlit secrets bridge
 
 import uuid
 import tempfile
@@ -31,6 +16,12 @@ from src.ingestion.marker_extractor import extract_markers
 from src.agent.graph import create_graph
 from src.agent.response_parser import parse_agent_response, strip_json_block
 from src.db.supabase_client import get_reports
+
+try:
+    config.validate()
+except RuntimeError as e:
+    st.error(str(e))
+    st.stop()
 
 # ── Response renderer ─────────────────────────────────────────────────────────
 FLAG_COLORS = {"high": "red", "low": "orange", "normal": "green"}
@@ -67,8 +58,20 @@ def render_assistant_message(text: str):
         st.caption("Sources: " + ", ".join(resp.sources))
 
 
-# ── Module-level singletons ───────────────────────────────────────────────────
-_graph = create_graph()
+# ── Cached resources ──────────────────────────────────────────────────────────
+# cache_resource, not module scope: Streamlit re-runs this script every
+# interaction, and a fresh graph means a fresh MemorySaver — wiping chat memory.
+@st.cache_resource
+def _build_graph():
+    return create_graph()
+
+
+@st.cache_data(ttl=30)
+def _list_reports() -> list:
+    return get_reports()
+
+
+_graph = _build_graph()
 
 # ── Session state defaults ────────────────────────────────────────────────────
 if "thread_id" not in st.session_state:
@@ -97,6 +100,7 @@ with st.sidebar:
             report_id = ingest(tmp_path)
             os.unlink(tmp_path)
         st.session_state.ingested_files.add(uploaded.name)
+        _list_reports.clear()
         st.success(f"✅ Report ingested — {n_total} markers extracted, {n_flagged} flagged")
         st.rerun()
     elif uploaded is not None:
@@ -104,7 +108,7 @@ with st.sidebar:
 
     st.divider()
 
-    reports = get_reports()
+    reports = _list_reports()
     if reports:
         options = {
             r["id"]: f"{r['lab_name'] or 'Unknown Lab'} — {r['report_date']} ({r['patient_age']}y {r['patient_gender']})"
