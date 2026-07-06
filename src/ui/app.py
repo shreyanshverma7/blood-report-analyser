@@ -16,6 +16,7 @@ from src.ingestion.errors import ExtractionError
 from src.agent.graph import create_graph
 from src.agent.response_parser import parse_agent_response, strip_json_block
 from src.db.supabase_client import get_reports
+from src.export.pdf_generator import generate_report_pdf
 
 logger = logging.getLogger(__name__)
 
@@ -71,6 +72,21 @@ def _build_graph():
 @st.cache_data(ttl=30)
 def _list_reports() -> list:
     return get_reports()
+
+
+@st.cache_data(ttl=60)
+def _report_pdf(report_id: str, summary: str | None) -> bytes:
+    return generate_report_pdf(report_id, summary)
+
+
+def _last_agent_summary() -> str | None:
+    """Summary of the most recent structured assistant reply, for the PDF."""
+    for msg in reversed(st.session_state.messages):
+        if msg["role"] == "assistant":
+            resp = parse_agent_response(msg["content"])
+            if resp is not None:
+                return resp.summary
+    return None
 
 
 _graph = _build_graph()
@@ -132,6 +148,21 @@ with st.sidebar:
             format_func=lambda rid: "All reports" if rid is None else labels[rid],
         )
         st.session_state.selected_report_id = selected
+
+        if selected:
+            report = next(r for r in reports if r["id"] == selected)
+            try:
+                pdf_bytes = _report_pdf(selected, _last_agent_summary())
+            except Exception:
+                logger.exception("PDF export failed")
+                st.caption("PDF export is unavailable for this report.")
+            else:
+                st.download_button(
+                    "Download Report PDF",
+                    data=pdf_bytes,
+                    file_name=f"report_{report['report_date'] or 'unknown'}.pdf",
+                    mime="application/pdf",
+                )
     else:
         st.info("No reports yet — upload a PDF above.")
 
