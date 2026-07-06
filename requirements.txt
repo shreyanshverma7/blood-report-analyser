@@ -24,3 +24,4 @@ requests==2.34.2             # HTTP calls in KB source fetching
 # --- Utilities ---
 pydantic==2.13.4             # Data validation (BaseModel, ReportMetadata, Marker)
 python-dotenv==1.2.2         # Load .env into os.environ
+langsmith==0.8.8             # Direct import in scripts/smoke_test.py (was transitive-only)
