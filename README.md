@@ -6,6 +6,18 @@ A RAG-powered blood report analysis app. Upload a PDF blood report, and chat wit
 
 ---
 
+## Screenshot
+
+![Blood Report Analyser screenshot](assets/screenshot.png)
+
+## Demo
+
+https://github.com/shreyanshverma7/blood-report-analyser/raw/main/assets/demo.mp4
+
+> If the video above doesn't play inline, download/view it directly: [assets/demo.mp4](assets/demo.mp4)
+
+---
+
 ## What it does
 
 - **Ingests** blood report PDFs using `pdfplumber` — known lab formats (LPL) go through deterministic regex extraction; everything else falls back to Groq structured extraction, so any lab report with a test/value/range table works
