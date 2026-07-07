@@ -155,13 +155,19 @@ if "ingested_files" not in st.session_state:
 with st.sidebar:
     st.header("Blood Report Analyser")
     st.caption(f"Signed in as {_session.user.email}")
-    if st.button("Log out"):
+    col_logout, col_clear = st.columns(2)
+    if col_logout.button("Log out", use_container_width=True):
         try:
             st.session_state.sb_auth.auth.sign_out()
         except Exception:
             logger.exception("Sign-out failed")
         user_context.clear()
         st.session_state.clear()
+        st.rerun()
+    if col_clear.button("Clear chat", use_container_width=True):
+        st.session_state.messages = []
+        # new thread_id so the agent's checkpointer memory starts fresh too
+        st.session_state.thread_id = str(uuid.uuid4())
         st.rerun()
 
     uploaded = st.file_uploader("Upload Blood Report PDF", type=["pdf"])
