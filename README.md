@@ -12,9 +12,7 @@ A RAG-powered blood report analysis app. Upload a PDF blood report, and chat wit
 
 ## Demo
 
-https://github.com/shreyanshverma7/blood-report-analyser/raw/main/assets/demo.mp4
-
-> If the video above doesn't play inline, download/view it directly: [assets/demo.mp4](assets/demo.mp4)
+https://github.com/user-attachments/assets/6ed5a41e-3b5e-4c40-9a57-85420743b7ee
 
 ---
 
