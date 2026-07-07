@@ -6,7 +6,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from qdrant_client.models import Distance, VectorParams
+from qdrant_client.models import Distance, PayloadSchemaType, VectorParams
 
 from src import config
 from src.core.clients import get_qdrant
@@ -25,4 +25,9 @@ client.create_collection(
     collection_name="report_chunks",
     vectors_config=VectorParams(size=384, distance=Distance.COSINE),
 )
-print("report_chunks recreated empty")
+# Qdrant Cloud rejects filters on unindexed payload fields (400)
+for field in ("user_id", "report_id"):
+    client.create_payload_index(
+        "report_chunks", field_name=field, field_schema=PayloadSchemaType.KEYWORD
+    )
+print("report_chunks recreated empty (user_id/report_id indexes in place)")
