@@ -1,31 +1,10 @@
-import os
 import uuid
 from typing import List, Dict
-from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
 
+from src.core import user_context
+from src.core.clients import get_embedding_model, get_qdrant
 from src.ingestion.marker_extractor import Marker
-
-load_dotenv()
-
-_MODEL = None
-_QDRANT = None
-
-
-def _get_model():
-    global _MODEL
-    if _MODEL is None:
-        _MODEL = SentenceTransformer("all-MiniLM-L6-v2")
-    return _MODEL
-
-
-def _get_qdrant():
-    global _QDRANT
-    if _QDRANT is None:
-        _QDRANT = QdrantClient(url=os.environ["QDRANT_URL"], api_key=os.environ["QDRANT_API_KEY"])
-    return _QDRANT
 
 _PANEL_KEYWORDS: Dict[str, List[str]] = {
     "CBC": [
@@ -61,7 +40,13 @@ def build_summary(panel_name: str, markers: List[Marker]) -> str:
     parts = [f"{panel_name} panel:"]
     for m in markers:
         if m.value is not None:
-            flag_str = f" ({m.flag.upper()})" if m.flag and m.flag != "normal" else " (normal)"
+            if m.flag and m.flag != "normal":
+                flag_str = f" ({m.flag.upper()})"
+            elif m.flag == "normal":
+                flag_str = " (normal)"
+            else:
+                # flag is None when there's no reference range — don't assert normality
+                flag_str = " (no reference range)"
             ref_str = ""
             if m.ref_low is not None and m.ref_high is not None:
                 ref_str = f", ref {m.ref_low}-{m.ref_high}"
@@ -77,6 +62,9 @@ def build_summary(panel_name: str, markers: List[Marker]) -> str:
 
 
 def embed_report(report_id: str, markers: List[Marker]) -> None:
+    if not markers:
+        return  # encode([]) and upsert(points=[]) both raise
+
     # Group markers by panel
     groups: Dict[str, List[Marker]] = {}
     for m in markers:
@@ -86,7 +74,7 @@ def embed_report(report_id: str, markers: List[Marker]) -> None:
     # Build summaries and embed
     summaries = {panel: build_summary(panel, panel_markers) for panel, panel_markers in groups.items()}
     texts = list(summaries.values())
-    embeddings = _get_model().encode(texts, normalize_embeddings=True)
+    embeddings = get_embedding_model().encode(texts, normalize_embeddings=True)
 
     points = [
         PointStruct(
@@ -94,6 +82,7 @@ def embed_report(report_id: str, markers: List[Marker]) -> None:
             vector=embeddings[i].tolist(),
             payload={
                 "report_id": report_id,
+                "user_id": user_context.user_id(),
                 "panel": panel,
                 "summary_text": summaries[panel],
             },
@@ -101,4 +90,4 @@ def embed_report(report_id: str, markers: List[Marker]) -> None:
         for i, panel in enumerate(summaries)
     ]
 
-    _get_qdrant().upsert(collection_name="report_chunks", points=points)
+    get_qdrant().upsert(collection_name="report_chunks", points=points)

@@ -1,9 +1,14 @@
 import os
-from dotenv import load_dotenv
-from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams
+import sys
 
-load_dotenv()
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+from qdrant_client import QdrantClient
+from qdrant_client.models import Distance, PayloadSchemaType, VectorParams
+
+from src import config
+
+config.validate()
 
 client = QdrantClient(
     url=os.environ["QDRANT_URL"],
@@ -15,6 +20,10 @@ COLLECTIONS = {
     "medical_kb": VectorParams(size=384, distance=Distance.COSINE),
 }
 
+# Qdrant Cloud rejects filters on unindexed payload fields (400) — these are
+# the fields query_my_reports filters by.
+REPORT_CHUNK_INDEXES = ("user_id", "report_id")
+
 existing = {c.name for c in client.get_collections().collections}
 
 for name, params in COLLECTIONS.items():
@@ -23,6 +32,12 @@ for name, params in COLLECTIONS.items():
     else:
         client.create_collection(collection_name=name, vectors_config=params)
         print(f"  created {name!r}")
+
+for field in REPORT_CHUNK_INDEXES:
+    client.create_payload_index(
+        "report_chunks", field_name=field, field_schema=PayloadSchemaType.KEYWORD
+    )
+    print(f"  payload index ensured: report_chunks.{field}")
 
 print("\nAll collections:")
 for c in client.get_collections().collections:

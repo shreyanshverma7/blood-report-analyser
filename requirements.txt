@@ -18,9 +18,11 @@ supabase==2.31.0             # Postgres client for report/marker storage
 
 # --- Ingestion ---
 pdfplumber==0.11.9           # PDF text extraction
+fpdf2==2.8.7                 # PDF report generation (export)
 beautifulsoup4==4.15.0       # HTML parsing for KB source scraping
 requests==2.34.2             # HTTP calls in KB source fetching
 
 # --- Utilities ---
 pydantic==2.13.4             # Data validation (BaseModel, ReportMetadata, Marker)
 python-dotenv==1.2.2         # Load .env into os.environ
+langsmith==0.8.8             # Direct import in scripts/smoke_test.py (was transitive-only)

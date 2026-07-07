@@ -1,8 +1,11 @@
 import os
 import sys
-from dotenv import load_dotenv
 
-load_dotenv()
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+from src import config
+
+config.validate()
 
 failures = []
 
@@ -28,7 +31,8 @@ def test_groq():
 
 def test_supabase():
     from supabase import create_client
-    client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
+    # anon key: reachability only — RLS hides rows without a user JWT
+    client = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_ANON_KEY"])
     try:
         client.from_("reports").select("count", count="exact").limit(0).execute()
     except Exception as e:

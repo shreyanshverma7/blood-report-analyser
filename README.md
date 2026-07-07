@@ -8,7 +8,7 @@ A RAG-powered blood report analysis app. Upload a PDF blood report, and chat wit
 
 ## What it does
 
-- **Ingests** blood report PDFs using `pdfplumber` + deterministic regex extraction — no LLM in the pipeline, so extraction is fast, cheap, and reliable
+- **Ingests** blood report PDFs using `pdfplumber` — known lab formats (LPL) go through deterministic regex extraction; everything else falls back to Groq structured extraction, so any lab report with a test/value/range table works
 - **Stores** structured marker data (name, value, unit, reference range, flag) in Supabase and embeds panel summaries into Qdrant
 - **Chats** via a LangGraph ReAct agent backed by Groq (`llama-3.3-70b-versatile`) with three tools:
   - `query_my_reports` — semantic search over your report panels
@@ -22,7 +22,7 @@ A RAG-powered blood report analysis app. Upload a PDF blood report, and chat wit
 
 | Layer | Tech |
 |---|---|
-| PDF extraction | pdfplumber + regex |
+| PDF extraction | pdfplumber + regex (LPL) / Groq structured extraction (other labs) |
 | Structured storage | Supabase (PostgreSQL) |
 | Vector storage | Qdrant Cloud |
 | Embeddings | `all-MiniLM-L6-v2` (sentence-transformers) |

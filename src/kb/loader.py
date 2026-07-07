@@ -2,29 +2,9 @@ import os
 import uuid
 from glob import glob
 from typing import List
-from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
-from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
 
-load_dotenv()
-
-_MODEL = None
-_QDRANT = None
-
-
-def _get_model():
-    global _MODEL
-    if _MODEL is None:
-        _MODEL = SentenceTransformer("all-MiniLM-L6-v2")
-    return _MODEL
-
-
-def _get_qdrant():
-    global _QDRANT
-    if _QDRANT is None:
-        _QDRANT = QdrantClient(url=os.environ["QDRANT_URL"], api_key=os.environ["QDRANT_API_KEY"])
-    return _QDRANT
+from src.core.clients import get_embedding_model, get_qdrant
 
 _SOURCES_DIR = os.path.join(os.path.dirname(__file__), "sources")
 _CHUNK_WORDS = 400
@@ -65,7 +45,7 @@ def load_kb() -> None:
             text = f.read()
 
         chunks = _chunk_text(text)
-        embeddings = _get_model().encode(chunks, normalize_embeddings=True)
+        embeddings = get_embedding_model().encode(chunks, normalize_embeddings=True)
 
         for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
             point_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"{filename}:{i}"))
@@ -77,6 +57,6 @@ def load_kb() -> None:
 
     batch_size = 100
     for i in range(0, len(all_points), batch_size):
-        _get_qdrant().upsert(collection_name="medical_kb", points=all_points[i : i + batch_size])
+        get_qdrant().upsert(collection_name="medical_kb", points=all_points[i : i + batch_size])
 
     print(f"Loaded {len(all_points)} chunks from {len(txt_files)} files into medical_kb")
