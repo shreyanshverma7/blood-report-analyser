@@ -1,5 +1,10 @@
 # Blood Report Analyser
 
+[![CI](https://github.com/shreyanshverma7/blood-report-analyser/actions/workflows/ci.yml/badge.svg)](https://github.com/shreyanshverma7/blood-report-analyser/actions/workflows/ci.yml)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blood-report-analyser-agent.streamlit.app/)
+
 A RAG-powered blood report analysis app. Upload a PDF blood report, and chat with it — ask about your abnormal markers, compare values across reports, or look up what a marker means in medical literature.
 
 **Live app:** [Blood Report Analyser](https://blood-report-analyser-agent.streamlit.app/)
@@ -96,3 +101,13 @@ src/
   ui/           # Streamlit app
 scripts/        # Setup and smoke test scripts
 ```
+
+---
+
+## Contributing
+
+Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) to get started, and check the [good first issues](https://github.com/shreyanshverma7/blood-report-analyser/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+
+## License
+
+[MIT](LICENSE)
