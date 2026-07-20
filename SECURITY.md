@@ -3,7 +3,7 @@
 ## Reporting a vulnerability
 
 If you find a security vulnerability, please **do not open a public issue**.
-Email shreyansh.verma.bce20@itbhu.ac.in with a description of the issue and
+Email shreyanshv97@gmail.com with a description of the issue and
 steps to reproduce. You'll get a response within a few days.
 
 ## Sensitive health data
